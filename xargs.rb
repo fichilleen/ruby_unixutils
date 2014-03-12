@@ -5,13 +5,13 @@ require 'open3'
 
 class ParallelExecution
     def run ( input, cmd, replace = false, verbose = false )
-        if verbose
-            $stderr.puts cmd
-        end
         if replace
             @cmd = cmd.sub "{}", input
         else
             @cmd = "#{cmd} #{input}"
+        end
+        if verbose
+            $stderr.puts @cmd + "\n"
         end
         handleCall
     end
@@ -64,14 +64,10 @@ def getOptions
 end
 
 opts = getOptions 
-
-puts opts
 threads = []
-
 opts[:inputs].each do |input| 
     threads << Thread.new { ParallelExecution.new.run input, opts[:cmd], opts[:replace], opts[:verbose] }
 end
-
 threads.each { |thread| thread.join }
 
 
