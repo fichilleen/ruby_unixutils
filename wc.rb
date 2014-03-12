@@ -23,7 +23,7 @@ end
 def getOptions
     options = {}
     OptionParser.new do |opts|
-      opts.banner = "Usage: example.rb [options]"
+      opts.banner = "wc - print newline, word, and byte counts for each file"
 
       opts.on("-b", "--bytes", "Count bytes") do |b|
         options[:bytes] = b
